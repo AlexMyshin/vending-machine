@@ -2,7 +2,7 @@ require 'user'
 
 describe 'user' do 
 
-let(:person){User.new}
+	let(:person){User.new}
 
 	it 'should be able to make a selection' do 
 		person.select("mars bar")
