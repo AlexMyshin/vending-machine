@@ -2,7 +2,8 @@ require 'coin_stack'
 
 describe 'filling the coin stack' do 
 
-	let(:coin_stack){CoinStack.new(10, 0, 7, 20, 10, 5, 5, 5)}
+	let(:coin_stack){CoinStack.new(5, 5, 5, 10, 20, 7, 0, 10)}
+
 
 	it 'when created the amount of coins can be set' do 
 		expect(coin_stack.value).to eq 21.95
@@ -39,11 +40,12 @@ describe 'filling the coin stack' do
 		let(:value_paid){0.75}
 
 		it 'calculates the change required' do 
-			expect(coin_stack.change_required(value_paid, product_cost)).to eq 0.5
+			expect(coin_stack.find_change_required(value_paid, product_cost)).to eq 0.5
 		end
 
 		it 'returns a hash of coins adding up to that value' do 
-			double
+			coin_stack.find_change_required(value_paid, product_cost)
+			expect(coin_stack.coins_returned).to include("50p")
 		end
 
 
