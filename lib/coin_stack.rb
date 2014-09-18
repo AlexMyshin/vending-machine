@@ -39,8 +39,9 @@ class CoinStack
 	def coins_returned
 		@value_of_change = 0.0
 		@return_to_customer =[]
-		while @value_of_change < @change_required.to_f
+		while @change_required != 0.0
 			get_change(select_coin)
+			@change_required -= decimal_value(select_coin)
 		end
 		return @return_to_customer
 	end

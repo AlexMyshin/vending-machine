@@ -37,15 +37,23 @@ describe 'filling the coin stack' do
 	context 'gives change' do 
 
 		let(:product_cost){0.25}
-		let(:value_paid){0.75}
+		let(:value_paid){1.75}
 
 		it 'calculates the change required' do 
-			expect(coin_stack.find_change_required(value_paid, product_cost)).to eq 0.5
+			expect(coin_stack.find_change_required(value_paid, product_cost)).to eq 1.5
 		end
 
 		it 'returns a hash of coins adding up to that value' do 
 			coin_stack.find_change_required(value_paid, product_cost)
-			expect(coin_stack.coins_returned).to include("50p")
+			expect(coin_stack.coins_returned).to include("£1", "50p")
+		end
+
+		it 'removes the coins from the coin_stack' do 
+			coin_stack.find_change_required(value_paid, product_cost)
+			coin_stack.coins_returned
+			expect(coin_stack.stack["50p"]).to eq 4
+			expect(coin_stack.stack["£1"]).to eq 4
+			expect(coin_stack.value).to eq 20.45
 		end
 
 
