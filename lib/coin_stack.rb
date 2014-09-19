@@ -1,16 +1,16 @@
-class CoinStack
+module CoinStack
 
 	attr_accessor :value, :stack
 
-	def initialize(two_pounds, one_pound, fifty_pence, twenty_pence, ten_pence, five_pence, two_pence, one_pence)
-		@stack = {"£2" 	=> two_pounds,
-							"£1" 	=> one_pound,	
-							"50p" => fifty_pence,
-							"20p" => twenty_pence,
-							"10p" => ten_pence, 
-							"5p" 	=> five_pence,
-							"2p" 	=> two_pence,
-							"1p" 	=> one_pence}
+	def initialize_coin_stack
+		@stack = {"£2" 	=> 0,
+							"£1" 	=> 0,
+							"50p" => 0,
+							"20p" => 0,
+							"10p" => 0,
+							"5p" 	=> 0,
+							"2p" 	=> 0,
+							"1p" 	=> 0}
 	end
 
 	def add_coin(denomination, quantity)
@@ -40,10 +40,11 @@ class CoinStack
 		@value_of_change = 0.0
 		@return_to_customer =[]
 		while @change_required != 0.0
-			get_change(select_coin)
-			@change_required -= decimal_value(select_coin)
+			coin = select_coin
+			get_change(coin)
+			@change_required -= decimal_value(coin)
 		end
-		return @return_to_customer
+		@return_to_customer
 	end
 
 private
