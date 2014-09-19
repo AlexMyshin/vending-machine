@@ -2,7 +2,7 @@ module ProductStack
 
 	attr_accessor :stocked_products, :selection
 
-	def stocked_products
+	def initialize_product_stack
 		@stocked_products = [ 
 													["mars bar", 		1.25,	0],
 												 	["polos",				0.75,	0],

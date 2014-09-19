@@ -7,7 +7,7 @@ class Machine
 	include CoinStack
 		
 		def initialize
-			self.stocked_products
+			self.initialize_product_stack
 			self.initialize_coin_stack
 		end
 

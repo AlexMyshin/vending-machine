@@ -3,8 +3,6 @@ require './spec/coin_stack_spec'
 
 describe 'machine' do
 
-	# it_behaves_like 'a coin stack' 
-
 let(:machine){Machine.new}
 
 	it 'asks the user to stock products' do 
