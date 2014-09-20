@@ -20,7 +20,6 @@ describe 'coin stack' do
 
 			it 'the number in the stack changes' do 
 				@test_coin_stack.add_coin("2p", 1)
-				p @test_coin_stack.stack
 				expect(@test_coin_stack.stack["2p"]).to eq 1
 			end
 
