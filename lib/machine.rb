@@ -1,5 +1,5 @@
-require 'product_stack'
-require 'coin_stack'
+require_relative 'product_stack'
+require_relative 'coin_stack'
 
 class Machine
 
@@ -49,8 +49,8 @@ class Machine
 			puts "Enter a coin and press enter. When finished, hit enter twice"
 			coin = gets.chomp
 				while !coin.empty? do
-					coin = gets.chomp
 					@user_payment << coin
+					coin = gets.chomp
 				end
 		end
 
@@ -60,13 +60,38 @@ class Machine
 			false
 		end
 
+		def validate
+			if payment_sufficient?
+				choose(@user_selection)
+			else 
+				get_user_payment
+			end
+		end
 
+		def run
+			take_stock
+			take_coins
+			select_product
+			get_user_payment
+			validate
+			p "Here is your #{@user_selection}:"
+			p choose(@user_selection)
+			p "Here is your #{find_change_required(find_payment_value, @stocked_products[find(@user_selection)][1])} change"
+			p coins_returned
+		end
+
+private
 
 		def find_payment_value
 			@payment_value = 0
+			@user_payment.reject! { |coin| coin.empty? }
 			@user_payment.each{|coin| @payment_value += decimal_value(coin)}
+			return @payment_value
 		end
-			
-		
-
 end
+
+
+
+
+
+

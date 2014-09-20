@@ -18,6 +18,7 @@ module ProductStack
 		@selection = product
 		raise "This product is not in stock" unless @stocked_products[find(product)][2] > 0
 		@stocked_products[find(product)][2] -=1
+		return @stocked_products[find(product)][0]
 	end
 
 	def restock(product, quantity)

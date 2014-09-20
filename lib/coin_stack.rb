@@ -19,9 +19,9 @@ module CoinStack
 
 	def decimal_value(coin)
 		if coin.end_with?("p")
-			 coin.chop.to_f / 100
+			 (coin.chop.to_f / 100)
 		else
-			coin[1..-1].to_f
+			(coin[1..-1].to_f)
 		end
 	end
 
@@ -33,7 +33,7 @@ module CoinStack
 
 
 	def find_change_required(value_paid, product_cost)
-		@change_required = value_paid - product_cost
+		@change_required = (value_paid - product_cost).round(2)
 	end
 
 	def coins_returned
@@ -42,12 +42,10 @@ module CoinStack
 		while @change_required != 0.0
 			coin = select_coin
 			get_change(coin)
-			@change_required -= decimal_value(coin)
+			@change_required = (@change_required -= decimal_value(coin)).round(2)
 		end
 		@return_to_customer
 	end
-
-private
 
 	def select_coin
 		@stack.find{|denomination, quantity| decimal_value(denomination) <= @change_required && quantity > 0}[0]
