@@ -46,48 +46,74 @@ class Machine
 		end
 
 		def get_user_payment
+			ask_for_coins
+			add_coins_to_user_payment
+			remove_empty_payment_values
+		end
+
+		def ask_for_coins
 			puts "Enter a coin and press enter. When finished, hit enter twice"
-			coin = gets.chomp
-				while !coin.empty? do
-					@user_payment << coin
-					coin = gets.chomp
-				end
 		end
 
-		def payment_sufficient?
-			find_payment_value
-			return true if @payment_value >= @stocked_products[find(@user_selection)][1]
-			false
-		end
-
-		def validate
-			if payment_sufficient?
-				choose(@user_selection)
-			else 
-				get_user_payment
+		def add_coins_to_user_payment
+			inserted_coin = gets.chomp
+			while !inserted_coin.empty? do
+					@user_payment << inserted_coin
+					inserted_coin = gets.chomp
 			end
 		end
 
+		def validate
+			return choose(@user_selection) if payment_sufficient?
+			get_user_payment
+		end
+
+		def payment_sufficient?
+			payment_value >= @stocked_products[find(@user_selection)][1]
+		end
+
+		def payment_value
+			@user_payment.inject(0){|payment_value, coin| p payment_value += decimal_value(coin)}
+		end
+
+		def remove_empty_payment_values
+			@user_payment.reject! { |coin| coin.empty? }
+		end
+
+		#program sequence methods
+
 		def run
+			initial_setup
+			vend_products
+		end
+
+		def initial_setup
 			take_stock
 			take_coins
+		end
+
+		def vend_products
+			take_user_inputs
+			return_product
+			return_change
+		end
+
+		def take_user_inputs
 			select_product
 			get_user_payment
 			validate
+		end
+
+		def return_product
 			p "Here is your #{@user_selection}:"
 			p choose(@user_selection)
+		end
+
+		def return_change
 			p "Here is your #{find_change_required(find_payment_value, @stocked_products[find(@user_selection)][1])} change"
 			p coins_returned
 		end
 
-private
-
-		def find_payment_value
-			@payment_value = 0
-			@user_payment.reject! { |coin| coin.empty? }
-			@user_payment.each{|coin| @payment_value += decimal_value(coin)}
-			return @payment_value
-		end
 end
 
 
