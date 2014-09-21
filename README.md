@@ -1,7 +1,5 @@
-Vending Maching
+Vending Machine
 ==========
-
-Technical Test 
 
 ###Specification
 
@@ -16,7 +14,7 @@ Design a vending machine in code.
 ###Technologies used
 
 + Ruby
-+ RSPECT
++ RSPEC
 
 ###How to set it up
 
